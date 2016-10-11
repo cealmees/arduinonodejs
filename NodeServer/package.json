@@ -1,0 +1,15 @@
+{
+  "name": "arduinojs",
+  "version": "1.0.0",
+  "description": "Node.js plus arduino interaction for IoT.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Cesar Alejandro Meza",
+  "license": "MIT",
+  "dependencies": {
+    "socket.io": "^1.5.0"
+  }
+}
