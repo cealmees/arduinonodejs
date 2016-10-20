@@ -18,9 +18,18 @@ io.on('connection', function(socket) {
             var parsedURL = url.parse(getValues, true);
             var params = parsedURL.query || {};
             var d = new Date();
+            console.log(params.value[2]);
             temp = params.value || null;
-            var message = '['+d.toLocaleString()+'] Temperatura: '+temp+'';
-            io.emit('chat message', message);
+            
+            var arduinoValues = {
+                ServerTime : d.toLocaleString(),  
+                Temperature : params.value[0], 
+                Humidity : params.value[1], 
+                Light : params.value[2] 
+            };
+            console.log(arduinoValues);
+            var message = '['+d.toLocaleString()+'] Temperatura: '+ arduinoValues.ServerTime +'';
+            io.emit('data sender', arduinoValues);
             if (temp) {
                 if (temp > TEMP_LIMIT) {
                     console.log('|warning| '+ message);

@@ -9,8 +9,8 @@
 6 silly lifecycle arduinojs@1.0.0~prestart: no script for prestart, continuing
 7 info lifecycle arduinojs@1.0.0~start: arduinojs@1.0.0
 8 verbose lifecycle arduinojs@1.0.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle arduinojs@1.0.0~start: PATH: /home/cealmees/.nvm/versions/node/v6.6.0/lib/node_modules/npm/bin/node-gyp-bin:/home/cealmees/Desktop/Arduino_Jornadas/node_modules/.bin:/home/cealmees/.nvm/versions/node/v6.6.0/bin:/home/cealmees/.nvm/versions/node/v6.6.0/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/home/cealmees/.local/bin:/home/cealmees/bin
-10 verbose lifecycle arduinojs@1.0.0~start: CWD: /home/cealmees/Desktop/Arduino_Jornadas
+9 verbose lifecycle arduinojs@1.0.0~start: PATH: /home/cealmees/.nvm/versions/node/v6.6.0/lib/node_modules/npm/bin/node-gyp-bin:/home/cealmees/Desktop/arduinonodejs/NodeServer/node_modules/.bin:/home/cealmees/.nvm/versions/node/v6.6.0/bin:/home/cealmees/.nvm/versions/node/v6.6.0/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/home/cealmees/.local/bin:/home/cealmees/bin
+10 verbose lifecycle arduinojs@1.0.0~start: CWD: /home/cealmees/Desktop/arduinonodejs/NodeServer
 11 silly lifecycle arduinojs@1.0.0~start: Args: [ '-c', 'node index.js' ]
 12 silly lifecycle arduinojs@1.0.0~start: Returned: code: 1  signal: null
 13 info lifecycle arduinojs@1.0.0~start: Failed to exec start script
@@ -25,7 +25,7 @@
 14 verbose stack     at maybeClose (internal/child_process.js:877:16)
 14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
 15 verbose pkgid arduinojs@1.0.0
-16 verbose cwd /home/cealmees/Desktop/Arduino_Jornadas
+16 verbose cwd /home/cealmees/Desktop/arduinonodejs/NodeServer
 17 error Linux 4.7.6-200.fc24.x86_64
 18 error argv "/home/cealmees/.nvm/versions/node/v6.6.0/bin/node" "/home/cealmees/.nvm/versions/node/v6.6.0/bin/npm" "start"
 19 error node v6.6.0

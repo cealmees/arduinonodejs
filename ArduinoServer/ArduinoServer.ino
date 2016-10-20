@@ -21,6 +21,13 @@ byte server[] = {10, 0, 0, 3};
 // Definimos la Dirección IP del Arduino
 byte ip[] = {10, 0, 0, 22};
 
+int photoRPin = 5; 
+int minLight = 0;          //Used to calibrate the readings
+int maxLight = 750;          //Used to calibrate the readings
+int lightLevel;
+int adjustedLightLevel;
+
+
 EthernetClient client;
 
 // Definimos la variable donde almacenaremos la respuesta del servidor.
@@ -37,15 +44,10 @@ void setup() {
 }
 
 void loop() {  
-int t= dht.readTemperature();//Lee la temperatura
-Serial.print("Temperatura: ");                  
-Serial.print(t);//Escribe la temperatura
-Serial.println(" C'");
-
 
 if (client.connect(server, 8080)) {
     // Enviamos la peticion GET utilizando el protocolo HTTP
-    client.println("GET /temp?value=" + String(t) + " HTTP/1.0");
+    client.println("GET /temp?value=" + String(GetTemperatureValue()) + "&value=" + String(GetHumidityValue()) + "&value=" + String(GetLightValue()) + " HTTP/2.0");
     client.println();
 
     // A continuación realizaremos la lectura de la respuesta desde el servidor
@@ -72,8 +74,24 @@ if (client.connect(server, 8080)) {
     }
 response = "";
 
-delay (1000);
+delay (500);
 Serial.println ();
 }
+}
+
+int GetLightValue()
+{
+  lightLevel=analogRead(photoRPin);  
+  return adjustedLightLevel = map(lightLevel, minLight, maxLight, 0, 100);
+}
+
+int GetTemperatureValue()
+{
+  return dht.readTemperature();
+}
+
+int GetHumidityValue()
+{
+  return dht.readHumidity();
 }
 
