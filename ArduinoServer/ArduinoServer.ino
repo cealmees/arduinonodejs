@@ -1,9 +1,6 @@
 #include <SPI.h>
 
-#include <EthernetUdp.h>
-#include <Dns.h>
 #include <EthernetServer.h>
-#include <Dhcp.h>
 #include <EthernetClient.h>
 #include <Ethernet.h>
 
@@ -14,69 +11,39 @@
 DHT dht(DHTPIN, DHTTYPE);
 
 byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0x98, 0x91};
-
-// Definimos la Dirección IP del Servidor Node.js
-byte server[] = {10, 0, 0, 3};
-
-// Definimos la Dirección IP del Arduino
 byte ip[] = {10, 0, 0, 22};
 
+byte server[] = {10, 0, 0, 3};
+
 int photoRPin = 5; 
-int minLight = 0;          //Used to calibrate the readings
-int maxLight = 750;          //Used to calibrate the readings
+int minLight = 0;   
+int maxLight = 750;    
 int lightLevel;
 int adjustedLightLevel;
 
-
 EthernetClient client;
 
-// Definimos la variable donde almacenaremos la respuesta del servidor.
-String response = String(10);
-// Definimos el separador del mensaje
-char separator = '|';
-// Utilizaremos esta variable para verificar si la lectura de la respuesta ha comenzado
-boolean started = false;
-
-void setup() {
-    Ethernet.begin(mac, ip); // Iniciamos el Ethernet Shield
+void setup() 
+{
+    Ethernet.begin(mac, ip); 
     Serial.begin(9600);
     dht.begin();
 }
 
-void loop() {  
-
-if (client.connect(server, 8080)) {
-    // Enviamos la peticion GET utilizando el protocolo HTTP
-    client.println("GET /temp?value=" + String(GetTemperatureValue()) + "&value=" + String(GetHumidityValue()) + "&value=" + String(GetLightValue()) + " HTTP/2.0");
-    client.println();
-
-    // A continuación realizaremos la lectura de la respuesta desde el servidor
-    // En este caso solo vamos a hacer lectura mientras estemos conectados
-    // Luego de leer la respuesta completa desconectamos el cliente
-    while (client.connected()) {
-      // Solo realizaremos la lectura de la respuesta si el cliente tiene
-      // algo para nosotros
-      if (client.available()) {
-        // Debemos leer caracter por caracter
-        char c = client.read();
-
-        // En el siguiente bloque de código utilizaremos el separador `|` para
-        // verificar cuando empieza y termina el mensaje que necesitamos
-        if (c != separator && started) {
-          response += c;
-        } else if (c == separator && !started) {
-          started = true;
-        } else if (c == separator && started) {
-          started = false;
-          client.stop();
-        }
-      }
-    }
-response = "";
-
-delay (500);
-Serial.println ();
+void loop() 
+{  
+  DebugSerialValues();
+  SendDataToServer(GetTemperatureValue(), GetHumidityValue(), GetLightValue());
+  delay (1000);
 }
+
+void SendDataToServer(int temperature, int humidity, int light)
+{
+  if (client.connect(server, 8080)) 
+  {
+    client.println("GET /temp?value=" + String(temperature) + "&value=" + String(humidity) + "&value=" + String(light) + " HTTP/2.0\n");
+  }
+  client.stop();
 }
 
 int GetLightValue()
@@ -94,4 +61,15 @@ int GetHumidityValue()
 {
   return dht.readHumidity();
 }
+
+void DebugSerialValues()
+{
+  Serial.print("\nTemperature: ");
+  Serial.println(GetTemperatureValue());
+  Serial.print("Humidity: ");
+  Serial.println(GetHumidityValue());
+  Serial.print("Light: ");
+  Serial.println(GetLightValue());
+}
+
 
