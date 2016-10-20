@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Socket.IO Arduino</title>
+        <style>
+            * { margin: 20; padding: 10; box-sizing: border-box; }
+            h1 { 
+                font: 30px Helvetica, Arial;
+                color: darkblue; 
+                }
+            h2 { 
+                font: 22px Helvetica, Arial; 
+                color: purple;
+                }
+            body {
+                background-color : gray;
+            }
+        </style>
+    </head>
+    <body>
+	<h1>Bienvenido a la app.</h1>
+        
+        <h2 id="serverTime"></h2>
+        <h2 id="temperature"></h2>
+        <h2 id="humidity"></h2>
+        <h2 id="light"></h2>
+
+
+
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script>
+            var socket = io();
+            socket.on('data sender', function(serverValues) {
+                document.getElementById("serverTime").innerHTML = "Server time: ["+serverValues.ServerTime+"]";
+                document.getElementById("temperature").innerHTML = "Arduino's temperature value: " + serverValues.Temperature + "° C";
+                document.getElementById("humidity").innerHTML = "Arduino's humidity value: " + serverValues.Humidity + "%";
+                document.getElementById("light").innerHTML = "Arduino's light value: " + serverValues.Light + "%";
+            });
+        </script>
+
+    </body>
+</html>
